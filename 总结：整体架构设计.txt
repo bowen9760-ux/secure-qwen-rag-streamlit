@@ -1,0 +1,28 @@
+总结：整体架构设计（RAG v2）
+
+1. 数据与入库层
+- data/：经过人工审核、可进入版本控制的知识源。
+- knowledge_base.py：文本校验、递归切分、SHA-256、确定性分片 ID、同名版本替换、目录同步、写锁和审计元数据。
+- vector_stores.py：Chroma 连接、Top-K 检索和真实相关度阈值。
+- chroma_db/：运行时向量数据；v2 默认使用 rag_v2 collection，与旧 rag 数据逻辑隔离。
+
+2. 模型与业务层
+- model_clients.py：统一创建阿里云百炼 OpenAI 兼容的聊天与嵌入客户端，固定端点、模型和向量维度。
+- rag.py：有限历史查询改写、检索、阈值拒答、不可信知识片段隔离、引用标识和有界会话管理。
+- config_data.py：基于项目根目录的路径、切分、检索、模型和历史配置。
+
+3. 应用层
+- app_qa.py：每个浏览器会话使用独立 UUID，支持流式回答和清空会话。
+- app_file_uploader.py：管理员令牌保护、显式提交、大小/编码/空内容校验，以及 data/ 全量重建。
+
+4. 质量与运行层
+- tests/：使用真实 Chroma 和离线伪向量/伪聊天模型验证关键契约。
+- eval_dataset.json + evaluate_retrieval.py：来源召回与越界拒答回归。
+- requirements.txt：锁定直接依赖；requirements.lock：Windows/Python 3.13.9 完整验证环境。
+- README.md、.env.example、.streamlit/config.toml：部署、安全边界和运行说明。
+
+核心安全原则：
+- 知识片段和聊天内容均是不可信数据，不作为可执行指令。
+- 没有达到相关度阈值的资料时确定性拒答。
+- 默认不持久化聊天历史；启用时使用哈希会话文件名、文件锁和原子替换。
+- 上传管理页必须配置管理员令牌，生产环境仍需 HTTPS、正式身份认证、网络隔离和审计。

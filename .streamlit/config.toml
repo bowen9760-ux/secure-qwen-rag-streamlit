@@ -1,0 +1,6 @@
+[server]
+# 在请求进入 Python 代码前限制上传体积，避免先把超大文件读入内存。
+maxUploadSize = 2
+
+[browser]
+gatherUsageStats = false

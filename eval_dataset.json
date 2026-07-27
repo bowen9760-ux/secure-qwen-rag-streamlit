@@ -1,0 +1,22 @@
+[
+  {
+    "id": "size_needs_measurements",
+    "query": "只提供身高和体重，能不能准确推荐衣服尺码？",
+    "expected_source": "尺码推荐.txt"
+  },
+  {
+    "id": "down_jacket_care",
+    "query": "羽绒服是否都可以直接干洗？",
+    "expected_source": "洗涤养护.txt"
+  },
+  {
+    "id": "warm_skin_colors",
+    "query": "暖黄皮适合选择哪些衣服颜色？",
+    "expected_source": "颜色选择.txt"
+  },
+  {
+    "id": "out_of_scope_weather",
+    "query": "上海明天几点下雨？",
+    "expected_source": null
+  }
+]

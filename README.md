@@ -5,6 +5,11 @@
 - `app_qa.py`：面向访客的问答页面；
 - `app_file_uploader.py`：受管理员令牌保护的知识库管理页面。
 
+  <img width="1618" height="1345" alt="屏幕截图 2026-09-11 001517" src="https://github.com/user-attachments/assets/ca88c7d6-d9ba-4b3c-87a5-1cc441416599" />
+  <img width="1005" height="1237" alt="屏幕截图 2026-09-11 001445" src="https://github.com/user-attachments/assets/5dd3740c-ecaf-44ca-98c4-efef2e985426" />
+
+
+
 ## 这版解决了什么
 
 - 每个 Streamlit 浏览器会话生成独立 UUID，不再让所有访客共用 `user_01`；
